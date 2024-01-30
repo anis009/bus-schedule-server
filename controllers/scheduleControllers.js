@@ -9,6 +9,14 @@ exports.createSchedule = async (req, res) => {
 };
 
 exports.getSchedule = async (req, res) => {
-	const schedules = await Schedule.find();
+	const { route } = req.query;
+	let filterQuery = {};
+	if (route) {
+		filterQuery = {
+			...filterQuery,
+			route: route,
+		};
+	}
+	const schedules = await Schedule.find(filterQuery);
 	res.send(schedules);
 };
